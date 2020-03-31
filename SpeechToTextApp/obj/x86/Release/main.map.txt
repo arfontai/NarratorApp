@@ -1,0 +1,20 @@
+[ResourceMetadata]
+"ResourceDimensions"		"scale-200"
+"ResourceDimensions"		"language-en-us"
+"ResourceDimensions"		"language-en-US"
+
+[Files]
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\split.pri"			"resources.pri"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\SpeechToTextApp.exe"			"SpeechToTextApp.exe"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\SpeechToTextApp.dll"			"SpeechToTextApp.dll"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Microsoft.CognitiveServices.Speech.extension.kws.dll"			"Microsoft.CognitiveServices.Speech.extension.kws.dll"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Microsoft.CognitiveServices.Speech.core.dll"			"Microsoft.CognitiveServices.Speech.core.dll"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\clrcompression.dll"			"clrcompression.dll"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\Wide310x150Logo.scale-200.png"			"Assets\Wide310x150Logo.scale-200.png"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\StoreLogo.png"			"Assets\StoreLogo.png"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\Square44x44Logo.targetsize-24_altform-unplated.png"			"Assets\Square44x44Logo.targetsize-24_altform-unplated.png"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\Square44x44Logo.scale-200.png"			"Assets\Square44x44Logo.scale-200.png"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\Square150x150Logo.scale-200.png"			"Assets\Square150x150Logo.scale-200.png"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\SplashScreen.scale-200.png"			"Assets\SplashScreen.scale-200.png"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\LockScreenLogo.scale-200.png"			"Assets\LockScreenLogo.scale-200.png"
+"C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\obj\x86\Release\PackageLayout\Assets\delete.png"			"Assets\delete.png"

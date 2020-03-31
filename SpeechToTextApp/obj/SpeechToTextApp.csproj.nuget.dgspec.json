@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\arfontai\\source\\repos\\SpeechToTextApp\\SpeechToTextApp\\SpeechToTextApp.csproj": {}
+    "C:\\Users\\arfontai\\source\\repos\\NarratorApp\\SpeechToTextApp\\SpeechToTextApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\arfontai\\source\\repos\\SpeechToTextApp\\SpeechToTextApp\\SpeechToTextApp.csproj": {
+    "C:\\Users\\arfontai\\source\\repos\\NarratorApp\\SpeechToTextApp\\SpeechToTextApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\arfontai\\source\\repos\\SpeechToTextApp\\SpeechToTextApp\\SpeechToTextApp.csproj",
+        "projectUniqueName": "C:\\Users\\arfontai\\source\\repos\\NarratorApp\\SpeechToTextApp\\SpeechToTextApp.csproj",
         "projectName": "SpeechToTextApp",
-        "projectPath": "C:\\Users\\arfontai\\source\\repos\\SpeechToTextApp\\SpeechToTextApp\\SpeechToTextApp.csproj",
+        "projectPath": "C:\\Users\\arfontai\\source\\repos\\NarratorApp\\SpeechToTextApp\\SpeechToTextApp.csproj",
         "packagesPath": "C:\\Users\\arfontai\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\arfontai\\source\\repos\\SpeechToTextApp\\SpeechToTextApp\\obj\\",
+        "outputPath": "C:\\Users\\arfontai\\source\\repos\\NarratorApp\\SpeechToTextApp\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -48,6 +48,10 @@
             "Plugin.AudioRecorder": {
               "target": "Package",
               "version": "[1.1.0, )"
+            },
+            "Universal.Microsoft.CognitiveServices.SpeakerRecognition": {
+              "target": "Package",
+              "version": "[1.4.0, )"
             }
           },
           "imports": [

@@ -9,7 +9,7 @@
 
   <Identity
     Name="4845d745-bd85-48c3-8103-dac1116b8293"
-    Publisher="CN=arfontai"
+    Publisher="CN=Arnaud Fontaine"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="4845d745-bd85-48c3-8103-dac1116b8293" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>

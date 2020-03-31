@@ -3,23 +3,177 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SpeechToTextApp"
+    xmlns:model="using:SpeechToTextApp.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <Color x:Key="ControlLightColor">White</Color>
+        <Color x:Key="ControlMediumColor">#FF7381F9</Color>
+        <Color x:Key="ControlDarkColor">#FF211AA9</Color>
+
+        <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
+        <Color x:Key="BorderMediumColor">#FF888888</Color>
+        <Color x:Key="BorderDarkColor">#FF444444</Color>
+
+        <Flyout x:Key="myColorPickerFlyout">
+            <RelativePanel>
+                <ColorPicker x:Name="myColorPicker"
+                         IsColorChannelTextInputVisible="False"
+                         IsHexInputVisible="False"
+                         Tag="{Binding Path=Name}"
+                         Color="{Binding Path=Tag}"
+                         LostFocus="myColorPicker_LostFocus" />
+            </RelativePanel>
+        </Flyout>
+    </Page.Resources>
+
     <Grid>
-        <Button x:Name="StartRecordButton" Content="Start Record" Margin="76,71,0,0" VerticalAlignment="Top" Click="StartRecordButton_Click"/>
-        <Button x:Name="StopRecordButton" Content="Stop Record" Margin="208,71,0,0" VerticalAlignment="Top" Click="StopRecordButton_Click"/>
-        <ListBox x:Name="MessageList" Margin="76,134,76,601" ItemsSource="{x:Bind Messages}">
-            <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="local:Message">
-                    <StackPanel>
-                        <TextBlock Text="{x:Bind SpeakerName, Mode=OneWay}" FontSize="12" FontWeight="Bold"></TextBlock>
-                        <TextBlock Text="{x:Bind MessageText, Mode=OneWay}" FontSize="12"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="950"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <RelativePanel Grid.Row="1" Grid.Column="1" >
+            <Button x:Name="StartRecordButton" Content="Start Record" Width="100" Click="StartRecordButton_Click"/>
+            <Button x:Name="StopRecordButton" Content="Stop Record" IsEnabled="False" RelativePanel.AlignLeftWith="StartRecordButton" Margin="125,0,0,0" Width="100" Click="StopRecordButton_Click"/>
+            <Button x:Name="CreateProfileButton" Content="Add Speaker" IsEnabled="False" RelativePanel.AlignLeftWith="StartRecordButton" Margin="250,0,0,0" Width="100" Click="CreateProfileButton_Click"/>
+            <Button x:Name="AddEnrollmentButton" Content="Train Speaker" IsEnabled="False" RelativePanel.AlignLeftWith="StartRecordButton" Margin="375,0,0,0" Width="110" Click="AddEnrollmentButton_Click"/>
+        </RelativePanel>
+
+        <RelativePanel Width="580" Grid.Row="1" Grid.Column="3" >
+
+            <TextBlock x:Name="SilenceThresholdTextBlock" Margin="10" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True" Text="Silence threshold" />
+            <Slider x:Name="SilenceThresholdSlider" RelativePanel.AlignVerticalCenterWith="SilenceThresholdTextBlock" RelativePanel.RightOf="SilenceThresholdTextBlock" Width="200" Height="29" Minimum="0" Maximum="1" LargeChange="0.05" ValueChanged="SilenceThresholdSlider_ValueChanged" SmallChange="0" Value="0.15" StepFrequency="0.05"/>
+
+            <TextBlock x:Name="SilenceTimeoutTextBlock" Margin="10" Text="Silence timeout" RelativePanel.AlignRightWith="SilenceThresholdTextBlock" RelativePanel.Below="SilenceThresholdTextBlock"/>
+            <Slider x:Name="SilenceTimeoutSlider" RelativePanel.AlignVerticalCenterWith="SilenceTimeoutTextBlock" RelativePanel.RightOf="SilenceTimeoutTextBlock" Width="200" Height="29" Minimum="0.25" Maximum="5" LargeChange="0.25" ValueChanged="SilenceTimeoutSlider_ValueChanged" SmallChange="0" Value="2" StepFrequency="0.25"/>
+
+            <TextBlock x:Name="TimeoutTextBlock" Margin="10" Text="Total Timeout" RelativePanel.AlignRightWith="SilenceTimeoutTextBlock" RelativePanel.Below="SilenceTimeoutTextBlock" />
+            <Slider x:Name="TimeoutSlider" RelativePanel.AlignVerticalCenterWith="TimeoutTextBlock" RelativePanel.RightOf="TimeoutTextBlock" Width="200" Height="29" Minimum="5" Maximum="60" LargeChange="1" ValueChanged="TimeoutSlider_ValueChanged" Value="10"/>
+
+            <ComboBox x:Name="LanguageComboBox" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Width="106" SelectionChanged="LanguageComboBox_SelectionChanged">
+                <ComboBoxItem   IsSelected="True">fr-FR</ComboBoxItem>
+                <ComboBoxItem>en-US</ComboBoxItem>
+            </ComboBox>
+        </RelativePanel>
+
+        <Grid Width="800" Grid.Row="2" Grid.Column="1">
+            <ListBox x:Name="MessageList" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionMode="Multiple" ItemsSource="{x:Bind Messages}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="model:Message">
+                        <Border Name="Border" BorderThickness="1" CornerRadius="2">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource ControlLightColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{x:Bind SpeakerStyle, Mode=OneWay}" />
+                            </Border.BorderBrush>
+                            <StackPanel Margin="3" Background="{x:Bind SpeakerColor, Mode=OneWay}">
+                                <TextBlock Margin="3,0" Text="{x:Bind SpeakerName, Mode=OneWay}" FontSize="14" FontWeight="Bold"></TextBlock>
+                                <TextBlock Margin="3" Text="{x:Bind MessageText, Mode=OneWay}" FontSize="14" TextWrapping="Wrap"></TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <Grid Width="580" Grid.Row="2" Grid.Column="3" >
+            <ListBox x:Name="SpeakerList" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{x:Bind Speakers}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="model:Speaker">
+                        <Border Name="Border" BorderThickness="1" CornerRadius="2">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource ControlLightColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{StaticResource BorderLightColor}" />
+                            </Border.BorderBrush>
+                            <RelativePanel Margin="3">
+                                <TextBlock 
+                                    Name="EnrollmentStatusTextBlock"
+                                    Text="{x:Bind EnrollmentStatus, Mode=OneTime}" 
+                                    Width="60"
+                                    Margin="3,0"
+                                    FontSize="12" 
+                                    FontWeight="Bold"
+                                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                                    RelativePanel.AlignLeftWithPanel="True"/>
+                                <TextBlock 
+                                    Name="EnrollmentProgressTextBlock"
+                                    Text="{x:Bind EnrollmentProgress, Mode=OneTime}" 
+                                    Width="40"
+                                    Margin="3,0"
+                                    FontSize="12" 
+                                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                                    RelativePanel.RightOf="EnrollmentStatusTextBlock"/>
+                                <TextBox 
+                                    Tag="{x:Bind SpeakerId, Mode=OneWay}"
+                                    Name="SpeakerNameTextBox"
+                                    Text="{x:Bind SpeakerName, Mode=TwoWay}" 
+                                    Width="170"
+                                    FontSize="14" 
+                                    FontWeight="Bold"
+                                    LostFocus="TextBox_LostFocus"
+                                    RelativePanel.RightOf="EnrollmentProgressTextBlock"
+                                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                                <Button
+                                    Tag="{x:Bind DialogColor, Mode=TwoWay}"
+                                    Name="{x:Bind SpeakerId, Mode=OneWay}"
+                                    Flyout="{StaticResource myColorPickerFlyout}"
+                                    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                    Background="White"
+                                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                                    RelativePanel.RightOf="SpeakerNameTextBox">
+                                    <Button.Content>
+                                        <Rectangle Width="50" Height="25">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="{x:Bind DialogColor, Mode=OneWay}"/>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Button.Content>
+                                </Button>
+
+                                <Button 
+                                    Name="DeleteButton" 
+                                    Tag="{x:Bind SpeakerId, Mode=OneWay}" 
+                                    Click="DeleteButton_Click"
+                                    Width="50"
+                                    Background="White"
+                                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                                    RelativePanel.AlignRightWithPanel="True">
+                                    <Button.Content>
+                                        <Image Source="Assets/delete.png"/>
+                                    </Button.Content>
+                                </Button>
+                            </RelativePanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
 </Page>

@@ -1,0 +1,1 @@
+C:\Users\arfontai\source\repos\NarratorApp\SpeechToTextApp\SpeechToTextApp.csproj;x86

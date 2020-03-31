@@ -3,3 +3,5 @@
 ################################################################################
 
 /SpeechToTextApp/AppPackages
+/SpeechToTextApp/bin/x86
+/.vs

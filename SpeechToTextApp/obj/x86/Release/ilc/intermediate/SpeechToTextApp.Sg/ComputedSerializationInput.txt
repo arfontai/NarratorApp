@@ -1,0 +1,2 @@
+"/t:Universal.Common.Serialization.XmlSerializable,Universal.Common.Serialization,xml"
+"/t:Microsoft.CognitiveServices.Speech.DetailedSpeechRecognitionResultCollection,Microsoft.CognitiveServices.Speech.csharp,json"
